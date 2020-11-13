@@ -42,9 +42,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTick(long millisUntilFinished) {
                 if (millisUntilFinished / 1000 > 0){
-                    mBinding.seekbarOne.setProgress(mBinding.seekbarOne.getProgress() + mRandom.nextInt(10));
-                    mBinding.seekbarTwo.setProgress(mBinding.seekbarTwo.getProgress() + mRandom.nextInt(10));
-                    mBinding.seekbarThree.setProgress(mBinding.seekbarThree.getProgress() + mRandom.nextInt(10));
+                    if (mBinding.seekbarOne.getProgress() >= 100){
+                        this.cancel();
+                    } else if (mBinding.seekbarTwo.getProgress() >= 100){
+                        this.cancel();
+                    } else if (mBinding.seekbarThree.getProgress() >= 100){
+                        this.cancel();
+                    }else{
+                        mBinding.seekbarOne.setProgress(mBinding.seekbarOne.getProgress() + mRandom.nextInt(10));
+                        mBinding.seekbarTwo.setProgress(mBinding.seekbarTwo.getProgress() + mRandom.nextInt(10));
+                        mBinding.seekbarThree.setProgress(mBinding.seekbarThree.getProgress() + mRandom.nextInt(10));
+                    }
+
                 }
             }
 
@@ -54,5 +63,11 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         mCountTimer.start();
+    }
+
+    @Override
+    protected void onStop() {
+        mCountTimer.cancel();
+        super.onStop();
     }
 }
