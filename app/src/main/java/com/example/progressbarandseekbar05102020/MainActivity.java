@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
     ActivityMainBinding mBinding;
     CountDownTimer mCountTimer;
     Random mRandom;
+    Boolean mIsFinish = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,47 +61,54 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
     }
 
     private void randomSeekbar() {
-        disableView(mBinding.seekbarOne);
-        disableView(mBinding.seekbarTwo);
-        disableView(mBinding.seekbarThree);
-        disableView(mBinding.checkboxOne);
-        disableView(mBinding.checkboxTwo);
-        disableView(mBinding.checkboxThree);
-        mCountTimer = new CountDownTimer(1100 , 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                if (millisUntilFinished / 1000 > 0){
-                    if (mBinding.seekbarOne.getProgress() >= 100){
-                        this.cancel();
-                        enableView(mBinding.seekbarOne);
-                        enableView(mBinding.seekbarTwo);
-                        enableView(mBinding.seekbarThree);
-                    } else if (mBinding.seekbarTwo.getProgress() >= 100){
-                        this.cancel();
-                        enableView(mBinding.seekbarOne);
-                        enableView(mBinding.seekbarTwo);
-                        enableView(mBinding.seekbarThree);
-                    } else if (mBinding.seekbarThree.getProgress() >= 100){
-                        this.cancel();
-                        enableView(mBinding.seekbarOne);
-                        enableView(mBinding.seekbarTwo);
-                        enableView(mBinding.seekbarThree);
-                    }else{
-                        mBinding.seekbarOne.setProgress(mBinding.seekbarOne.getProgress() + mRandom.nextInt(10));
-                        mBinding.seekbarTwo.setProgress(mBinding.seekbarTwo.getProgress() + mRandom.nextInt(10));
-                        mBinding.seekbarThree.setProgress(mBinding.seekbarThree.getProgress() + mRandom.nextInt(10));
+        if (mIsFinish){
+            mIsFinish = false;
+            disableView(mBinding.seekbarOne);
+            disableView(mBinding.seekbarTwo);
+            disableView(mBinding.seekbarThree);
+            disableView(mBinding.checkboxOne);
+            disableView(mBinding.checkboxTwo);
+            disableView(mBinding.checkboxThree);
+            mCountTimer = new CountDownTimer(1100 , 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    if (millisUntilFinished / 1000 > 0){
+                        if (mBinding.seekbarOne.getProgress() >= 100){
+                            this.cancel();
+                            enableView(mBinding.seekbarOne);
+                            enableView(mBinding.seekbarTwo);
+                            enableView(mBinding.seekbarThree);
+                            mIsFinish = true;
+                        } else if (mBinding.seekbarTwo.getProgress() >= 100){
+                            this.cancel();
+                            enableView(mBinding.seekbarOne);
+                            enableView(mBinding.seekbarTwo);
+                            enableView(mBinding.seekbarThree);
+                            mIsFinish = true;
+                        } else if (mBinding.seekbarThree.getProgress() >= 100){
+                            this.cancel();
+                            enableView(mBinding.seekbarOne);
+                            enableView(mBinding.seekbarTwo);
+                            enableView(mBinding.seekbarThree);
+                            mIsFinish = true;
+                        }else{
+                            mBinding.seekbarOne.setProgress(mBinding.seekbarOne.getProgress() + mRandom.nextInt(10));
+                            mBinding.seekbarTwo.setProgress(mBinding.seekbarTwo.getProgress() + mRandom.nextInt(10));
+                            mBinding.seekbarThree.setProgress(mBinding.seekbarThree.getProgress() + mRandom.nextInt(10));
+
+                        }
 
                     }
-
                 }
-            }
 
-            @Override
-            public void onFinish() {
-                mCountTimer.start();
-            }
-        };
-        mCountTimer.start();
+                @Override
+                public void onFinish() {
+                    mCountTimer.start();
+                }
+            };
+            mCountTimer.start();
+        }
+
     }
 
     @Override
