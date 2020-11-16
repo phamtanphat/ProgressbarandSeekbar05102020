@@ -95,9 +95,7 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
                             mBinding.seekbarOne.setProgress(mBinding.seekbarOne.getProgress() + mRandom.nextInt(10));
                             mBinding.seekbarTwo.setProgress(mBinding.seekbarTwo.getProgress() + mRandom.nextInt(10));
                             mBinding.seekbarThree.setProgress(mBinding.seekbarThree.getProgress() + mRandom.nextInt(10));
-
                         }
-
                     }
                 }
 
