@@ -32,8 +32,21 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         // Task 4 : Cộng điểm khi chiến thắng vào báo khi thua cuộc
 
         init();
+        event();
+    }
+
+    private void event() {
         validCheckbox();
-        randomSeekbar();
+        mBinding.imageviewPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mBinding.checkboxOne.isChecked() || mBinding.checkboxTwo.isChecked() || mBinding.checkboxThree.isChecked()){
+                    randomSeekbar();
+                }else{
+                    Toast.makeText(MainActivity.this, "Bạn chưa đặt cược", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void validCheckbox() {
@@ -50,6 +63,9 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         disableView(mBinding.seekbarOne);
         disableView(mBinding.seekbarTwo);
         disableView(mBinding.seekbarThree);
+        disableView(mBinding.checkboxOne);
+        disableView(mBinding.checkboxTwo);
+        disableView(mBinding.checkboxThree);
         mCountTimer = new CountDownTimer(1100 , 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
